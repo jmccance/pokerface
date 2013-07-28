@@ -13,8 +13,6 @@ $(function() {
         var template = Handlebars.compile(source);
         var content = template({items: data.estimates});
 
-        console.log(data.host);
-        console.log(socket.socket.sessionid);
         if (data.host == socket.socket.sessionid) {
             $('#host').show();
         } else {
@@ -46,6 +44,12 @@ $(function() {
         }
     });
  
+    $('#estimate-input').keypress(function(e) {
+        if (e.which == 13) {
+            $('#send').click();
+        }
+    });
+
     $('#send').click(function() {
         socket.emit('estimate', {
             estimate: $('#estimate-input').val()

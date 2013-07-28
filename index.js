@@ -59,6 +59,8 @@ io.sockets.on('connection', function (socket) {
 
 		socket.username = data.username;
 		socket.room = data.room;
+		socket.estimate = null;
+		socket.estimated = false;
 		socket.join(data.room);
 		io.sockets.in(socket.room).emit('data', getEstimates(socket.room));		
 	});
