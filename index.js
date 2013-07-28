@@ -1,6 +1,6 @@
 var express = require("express");
 var app = express();
-var port = 3700;
+var port = process.env.PORT || 3700;
  
  
 app.use(express.static(__dirname + '/public'));
@@ -17,6 +17,12 @@ var _rooms = {};
 
 var io = require('socket.io').listen(app.listen(port));
 console.log("Listening on port " + port);
+
+// this sucks, but heroku requires it
+io.configure(function () { 
+  io.set("transports", ["xhr-polling"]); 
+  io.set("polling duration", 10); 
+});
 
 var getEstimates = function(roomId) {
 	var room = _rooms[roomId];
@@ -98,7 +104,7 @@ io.sockets.on('connection', function (socket) {
 				current.estimated = false;				
 			}
 		}
-				
+
 		var room = _rooms[socket.room];
 		if (room) {
 			room.revealed = false;
