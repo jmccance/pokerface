@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <title>Poker Face</title>
+        <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js'></script>
+        <script src='//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.min.js'></script>
+        <script src='//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js'></script>
+        <script src='//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js'></script>
+        <script src='/socket.io/socket.io.js'></script>
+        <script src='/chat.js'></script>
+    </head>
+    <body>
+        <div id="identity">
+            Name: <input type="text" id="name" />
+            <input type="button" value="Join" id="join" />
+        </div>
+        <div id="content" style='width: 500px; height: 300px; margin: 0 0 20px 0; border: solid 1px #999; overflow-y: scroll;'>
+        </div>
+    </body>
+</html>

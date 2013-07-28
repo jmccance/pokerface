@@ -3,14 +3,10 @@ var app = express();
 var port = 3700;
  
  
-app.set('views', __dirname + '/templates');
-app.set('view engine', "jade");
-app.engine('jade', require('jade').__express);
-
 app.use(express.static(__dirname + '/public'));
 
 app.get("/", function(req, res){
-    res.render("page");
+    res.render("index.html");
 });
 
 

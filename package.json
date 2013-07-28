@@ -4,8 +4,7 @@
     "description": "Planning poker for the masses",
     "dependencies": {
         "socket.io": "latest",
-        "express": "latest",
-        "jade": "latest"
+        "express": "latest"
     },
     "author": "Jeff Knecht"
 }
