@@ -31,17 +31,23 @@ $(function() {
 
     $("#join").click(function() {
         var name = $('#name').val();
-        if(name == "") {
-            alert("Please type your name!");
-        } else {
-            socket.emit('join', { 
-                username: name, 
-                room: $('#room').val() 
-            });
-            $('#identity').hide();
-            $('#estimate').show();
-            $('#content').show();
+        var room = $('#room').val();
+        if(room == "") {
+            alert("Please enter a room");
+            return;
         }
+        if(name == "") {
+            alert("Please enter your name");
+            return;
+        }
+
+        socket.emit('join', { 
+            username: name, 
+            room: room 
+        });
+        $('#identity').hide();
+        $('#estimate').show();
+        $('#content').show();
     });
  
     $('#estimate-input').keypress(function(e) {

@@ -97,7 +97,12 @@ io.sockets.on('connection', function (socket) {
 				current.estimate = '';
 				current.estimated = false;				
 			}
-		}		
+		}
+				
+		var room = _rooms[socket.room];
+		if (room) {
+			room.revealed = false;
+		}
 		io.sockets.in(socket.room).emit('data', getEstimates(socket.room));		
 	});
 	
