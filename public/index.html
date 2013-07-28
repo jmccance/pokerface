@@ -3,8 +3,6 @@
         <title>Poker Face</title>
         <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js'></script>
         <script src='//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.min.js'></script>
-        <script src='//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js'></script>
-        <script src='//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js'></script>
         <script src='/socket.io/socket.io.js'></script>
         <script src='/chat.js'></script>
 
@@ -22,6 +20,7 @@
             </tbody>
           </table>
         </script>
+
         <script id="participants-template-reveal" type="text/x-handlebars-template">
           <table>
             <thead>
@@ -38,6 +37,11 @@
     </head>
     <body>
         <div id="identity">
+            Room: <select id="room">
+                <option value="room1">Room 1</option>
+                <option value="room2">Room 2</option>
+                <option value="room3">Room 3</option>
+            </select>
             Name: <input type="text" id="name" />
             <input type="button" value="Join" id="join" />
         </div>

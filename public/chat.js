@@ -26,7 +26,10 @@ $(function() {
         if(name.value == "") {
             alert("Please type your name!");
         } else {
-            socket.emit('join', { username: name.value });
+            socket.emit('join', { 
+                username: name.value, 
+                room: $('#room').val() 
+            });
             $('#identity').hide();
             $('#estimate').show();
         }

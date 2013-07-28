@@ -17,15 +17,17 @@ var revealed = false;
 var io = require('socket.io').listen(app.listen(port));
 console.log("Listening on port " + port);
 
-var getEstimates = function() {
+var getEstimates = function(room) {
 	var estimates = [];
 	var keys = Object.keys(_sockets);
+	var current;
 	for (var i = 0; i < keys.length; i++) {
-		if (_sockets[keys[i]].username) {
+		current = _sockets[keys[i]];
+		if (current.room == room && current.username) {
 			estimates.push({
-				name: _sockets[keys[i]].username,
-				estimate: revealed ? _sockets[keys[i]].estimate : '-',
-				estimated: _sockets[keys[i]].estimated
+				name: current.username,
+				estimate: revealed ? current.estimate : '-',
+				estimated: current.estimated
 			});
 		}
 	}
@@ -40,38 +42,44 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('join', function(data) {
 		socket.username = data.username;
-		io.sockets.emit('updateusers', getEstimates());		
+		socket.room = data.room;
+		socket.join(data.room);
+		io.sockets.in(socket.room).emit('updateusers', getEstimates(socket.room));		
 	});
 
 	socket.on('estimate', function(data) {
 		socket.estimate = data.estimate;
 		socket.estimated = !!(socket.estimate);
-		io.sockets.emit('updateusers', getEstimates());		
+		io.sockets.in(socket.room).emit('updateusers', getEstimates(socket.room));		
 	});
 
 	socket.on('conceal', function() {
 		revealed = false;
-		io.sockets.emit('updateusers', getEstimates());		
+		io.sockets.in(socket.room).emit('updateusers', getEstimates(socket.room));		
 	});
 
 	socket.on('reveal', function() {
 		revealed = true;
-		io.sockets.emit('updateusers', getEstimates());		
+		io.sockets.in(socket.room).emit('updateusers', getEstimates(socket.room));		
 	});
 
 	socket.on('clear-estimates', function() {
 		revealed = false;
 		var keys = Object.keys(_sockets);
+		var current;
 		for (var i = 0; i < keys.length; i++) {
-			_sockets[keys[i]].estimate = '';
-			_sockets[keys[i]].estimated = false;
+			current = _sockets[keys[i]];
+			if (current.room == socket.room) {
+				current.estimate = '';
+				current.estimated = false;				
+			}
 		}		
-		io.sockets.emit('updateusers', getEstimates());		
+		io.sockets.in(socket.room).emit('updateusers', getEstimates(socket.room));		
 	});
 	
 	socket.on('disconnect', function() {
 		delete _sockets[socket.id];
 	});
 
-	io.sockets.emit('updateusers', getEstimates());
+	//io.sockets.emit('updateusers', getEstimates());
 });
