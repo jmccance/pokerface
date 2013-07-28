@@ -1,6 +1,7 @@
 $(function() {
  
     var socket = io.connect('//');
+        console.log(socket);
 
     socket.on('data', function (data) {
         var source;
@@ -11,8 +12,21 @@ $(function() {
         }
         var template = Handlebars.compile(source);
         var content = template({items: data.estimates});
+
+        if (data.host == socket.socket.sessionid) {
+            $('#host').show();
+        } else {
+            $('#host').hide();
+        }
         $('#content').html(content);
         $('#conceal-reveal').val(data.reveal ? 'Conceal' : 'Reveal');
+    });
+
+    socket.on('room-closed', function() {
+        $('#content').hide();
+        $('#estimate').hide();
+        $('#identity').show();
+        alert('The room has been closed by the host.');
     });
 
     $("#join").click(function() {
