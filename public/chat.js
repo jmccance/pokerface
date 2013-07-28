@@ -1,15 +1,8 @@
 $(function() {
  
     var socket = io.connect('//');
-    var joinButton = document.getElementById("join");
-    var identitySection = document.getElementById("identity");
 
-    var field = document.getElementById("field");
-    var sendButton = document.getElementById("send");
-    var content = document.getElementById("content");
-    var name = document.getElementById("name");
- 
-    socket.on('updateusers', function (data) {
+    socket.on('data', function (data) {
         var source;
         if (data.reveal) {
             source = $('#participants-template-reveal').html();
@@ -23,15 +16,17 @@ $(function() {
     });
 
     $("#join").click(function() {
-        if(name.value == "") {
+        var name = $('#name').val();
+        if(name == "") {
             alert("Please type your name!");
         } else {
             socket.emit('join', { 
-                username: name.value, 
+                username: name, 
                 room: $('#room').val() 
             });
             $('#identity').hide();
             $('#estimate').show();
+            $('#content').show();
         }
     });
  

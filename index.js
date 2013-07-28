@@ -44,23 +44,23 @@ io.sockets.on('connection', function (socket) {
 		socket.username = data.username;
 		socket.room = data.room;
 		socket.join(data.room);
-		io.sockets.in(socket.room).emit('updateusers', getEstimates(socket.room));		
+		io.sockets.in(socket.room).emit('data', getEstimates(socket.room));		
 	});
 
 	socket.on('estimate', function(data) {
 		socket.estimate = data.estimate;
 		socket.estimated = !!(socket.estimate);
-		io.sockets.in(socket.room).emit('updateusers', getEstimates(socket.room));		
+		io.sockets.in(socket.room).emit('data', getEstimates(socket.room));		
 	});
 
 	socket.on('conceal', function() {
 		revealed = false;
-		io.sockets.in(socket.room).emit('updateusers', getEstimates(socket.room));		
+		io.sockets.in(socket.room).emit('data', getEstimates(socket.room));		
 	});
 
 	socket.on('reveal', function() {
 		revealed = true;
-		io.sockets.in(socket.room).emit('updateusers', getEstimates(socket.room));		
+		io.sockets.in(socket.room).emit('data', getEstimates(socket.room));		
 	});
 
 	socket.on('clear-estimates', function() {
@@ -74,15 +74,13 @@ io.sockets.on('connection', function (socket) {
 				current.estimated = false;				
 			}
 		}		
-		io.sockets.in(socket.room).emit('updateusers', getEstimates(socket.room));		
+		io.sockets.in(socket.room).emit('data', getEstimates(socket.room));		
 	});
 	
 	socket.on('disconnect', function() {
 		var room = socket.room;
 		socket.leave(socket.room);
 		delete _sockets[socket.id];
-		io.sockets.in(room).emit('updateusers', getEstimates(room));
+		io.sockets.in(room).emit('data', getEstimates(room));
 	});
-
-	//io.sockets.emit('updateusers', getEstimates());
 });
