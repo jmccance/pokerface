@@ -78,7 +78,10 @@ io.sockets.on('connection', function (socket) {
 	});
 	
 	socket.on('disconnect', function() {
+		var room = socket.room;
+		socket.leave(socket.room);
 		delete _sockets[socket.id];
+		io.sockets.in(room).emit('updateusers', getEstimates(room));
 	});
 
 	//io.sockets.emit('updateusers', getEstimates());
