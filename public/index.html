@@ -7,13 +7,49 @@
         <script src='//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js'></script>
         <script src='/socket.io/socket.io.js'></script>
         <script src='/chat.js'></script>
+
+
+
+        <script id="participants-template-conceal" type="text/x-handlebars-template">
+          <table>
+            <thead>
+              <tr><td>Name</td><td>Estimate</td></tr>
+            </thead>
+            <tbody>
+              {{#each items}}
+              <tr><td>{{name}}</td><td>{{estimated}}</td></tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </script>
+        <script id="participants-template-reveal" type="text/x-handlebars-template">
+          <table>
+            <thead>
+              <tr><td>Name</td><td>Estimate</td></tr>
+            </thead>
+            <tbody>
+              {{#each items}}
+              <tr><td>{{name}}</td><td>{{estimate}}</td></tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </script>
+
     </head>
     <body>
         <div id="identity">
             Name: <input type="text" id="name" />
             <input type="button" value="Join" id="join" />
         </div>
-        <div id="content" style='width: 500px; height: 300px; margin: 0 0 20px 0; border: solid 1px #999; overflow-y: scroll;'>
+        <div id="estimate" style="display:none">
+            Estimate: <input type="text" id="estimate-input" />
+            <input type="button" value="Estimate" id="send" />
+        </div>
+        <div id="host">
+            <input type="button" id="clear" value="Clear" />
+            <input type="button" id="conceal-reveal" value="Conceal" />
+        </div>
+        <div id="content">
         </div>
     </body>
 </html>
