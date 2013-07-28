@@ -110,7 +110,7 @@ io.sockets.on('connection', function (socket) {
 			var wasHostingARoom = _room && (_room.host === socket.id);
 			if (wasHostingARoom) {
 				console.log('deleting room ' + room);
-				delete _room[room];
+				delete _rooms[room];
 
 				io.sockets.in(room).emit('room-closed');
 				// now that we've told them about it,

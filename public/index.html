@@ -1,28 +1,38 @@
 <html>
     <head>
         <title>Poker Face</title>
+
+        <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css"></link>
+
         <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js'></script>
         <script src='//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.min.js'></script>
         <script src='/socket.io/socket.io.js'></script>
         <script src='/chat.js'></script>
 
-
+        <style type="text/css">
+          .estimated {
+            background-image:url(greencheck.png);
+            background-repeat:no-repeat;
+          }
+        </style>
 
         <script id="participants-template-conceal" type="text/x-handlebars-template">
-          <table>
+          <h2>Participants</h2>
+          <table class="table table-striped table-condensed">
             <thead>
               <tr><td>Name</td><td>Estimate</td></tr>
             </thead>
             <tbody>
               {{#each items}}
-              <tr><td>{{name}}</td><td>{{estimated}}</td></tr>
+              <tr><td>{{name}}</td><td {{#if estimated}}class="estimated"{{/if}}>&nbsp;</td></tr>
               {{/each}}
             </tbody>
           </table>
         </script>
 
         <script id="participants-template-reveal" type="text/x-handlebars-template">
-          <table>
+          <h2>Participants</h2>
+          <table class="table table-striped table-condensed">
             <thead>
               <tr><td>Name</td><td>Estimate</td></tr>
             </thead>
@@ -37,21 +47,23 @@
     </head>
     <body>
         <div id="identity">
+            <h1>Join/Create a Session</h1>
             Room: <select id="room">
                 <option value="room1">Room 1</option>
                 <option value="room2">Room 2</option>
                 <option value="room3">Room 3</option>
             </select>
             Name: <input type="text" id="name" />
-            <input type="button" value="Join" id="join" />
+            <input type="button" value="Join" id="join" class="btn btn-primary" />
         </div>
         <div id="estimate" style="display:none">
-            Estimate: <input type="text" id="estimate-input" />
-            <input type="button" value="Estimate" id="send" />
+            <h1>Let's Estimate</h1>
+            Your Estimate: <input type="text" id="estimate-input" />
+            <input type="button" value="Estimate" id="send" class="btn btn-primary" />
         </div>
         <div id="host" style="display:none">
-            <input type="button" id="clear" value="Clear" />
-            <input type="button" id="conceal-reveal" value="Conceal" />
+            <input type="button" id="clear" value="Clear" class="btn btn-primary" />
+            <input type="button" id="conceal-reveal" value="Conceal" class="btn btn-default" />
         </div>
         <div id="content" style="display:none">
         </div>
