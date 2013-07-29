@@ -29,6 +29,12 @@ $(function() {
         alert('The room has been closed by the host.');
     });
 
+    $('#room,#name').keypress(function(e) {
+        if (e.which == 13) {
+            $('#join').click();
+        }
+    });
+
     $("#join").click(function() {
         var name = $('#name').val();
         var room = $('#room').val();
