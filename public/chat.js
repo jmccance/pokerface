@@ -14,11 +14,6 @@ $(function() {
         var content = template({items: data.estimates});
 
         if (data.host == socket.socket.sessionid) {
-            if (data.reveal) {
-                $('#conceal-reveal').val("Conceal");
-            } else {
-                $('#conceal-reveal').val("Reveal");
-            }
             $('#host').show();
         } else {
             $('#host').hide();
