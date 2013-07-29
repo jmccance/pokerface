@@ -14,6 +14,11 @@ $(function() {
         var content = template({items: data.estimates});
 
         if (data.host == socket.socket.sessionid) {
+            if (data.reveal) {
+                $('#conceal-reveal').val("Conceal");
+            } else {
+                $('#conceal-reveal').val("Reveal");
+            }
             $('#host').show();
         } else {
             $('#host').hide();
@@ -67,10 +72,8 @@ $(function() {
         var $this = $(this);
         if ($this.val() == 'Conceal') {
             socket.emit('conceal');
-            $this.val('Reveal');
         } else {
             socket.emit('reveal');
-            $this.val('Conceal');
         }
     });
 
