@@ -9,6 +9,9 @@ app.get("/", function(req, res){
     res.render("index.html");
 });
 
+app.get("/heartbeat", function(req, res){
+    res.send({beat: 'ok'});
+});
 
 // clients which are currently connected to the app
 var _sockets = {};

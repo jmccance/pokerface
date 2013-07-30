@@ -82,4 +82,22 @@ $(function() {
         socket.emit('clear-estimates');
     });
  
+    // every minute or so, hit the server just so 
+    // we can keep the connection alive
+    // we wouldn't need this if our web host supported
+    // websockets properly
+    var heartbeat = function() {
+        $('#heartbeat-icon').fadeIn();
+        $.ajax({
+            url: 'heartbeat',
+            success: function() {
+                setTimeout(function() {
+                    $('#heartbeat-icon').fadeOut();
+                }, 1000);
+            }
+        });
+        setTimeout(heartbeat, 60000);
+    };
+
+    heartbeat();
 });
