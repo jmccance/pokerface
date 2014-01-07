@@ -52,6 +52,7 @@ $(function() {
             room: room 
         });
         $('#identity').hide();
+        $('#room-title').html(room);
         $('#estimate').show();
         $('#content').show();
     });
